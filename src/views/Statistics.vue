@@ -1,5 +1,7 @@
 <template>
-  <div>统计</div>
+  <div>统计
+    <Nav/>
+  </div>
 </template>
 
 <script lang="ts">
