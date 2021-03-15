@@ -1,11 +1,14 @@
 <template>
-<div>记账</div>
+  <div>记账
+    <Nav/>
+  </div>
 </template>
 
 <script lang="ts">
+
 export default {
-name: "Money"
-}
+  name: 'Money',
+};
 </script>
 
 <style lang="scss" scoped>
