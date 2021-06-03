@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Layout>
+    <Layout content-class="xxx">
       <div class="tags">
         <ul class="current">
           <li>衣</li>
@@ -12,8 +12,8 @@
           <button>新增标签</button>
         </div>
       </div>
-      <div class="notes">
-        <label>
+      <div>
+        <label class="notes">
           <span class="name">备注</span>
           <input type="text" placeholder="备注信息">
         </label>
@@ -58,6 +58,7 @@ export default {
 @import "~@/assets/style/helper.scss";
 
 .tags{
+  flex-grow: 1;
   font-size: 14px;
   padding: 16px;
   background: #e4e9ef;
@@ -89,17 +90,17 @@ export default {
   display: flex;
   align-items: center;
 
-  .name{
-    padding-right: 16px;
-  }
+    .name{
+      padding-right: 16px;
+    }
 
-  input{
-    height: 64px;
-    flex-grow: 1;
-    background-color: transparent;
-    border: none;
-    padding-right: 16px;
-  }
+    input{
+      height: 64px;
+      background-color: transparent;
+      border: none;
+      padding-right: 16px;
+      flex: 1;
+    }
 }
 
 .types{
@@ -128,8 +129,6 @@ export default {
 
 .numberPad{
   background: $numberPad-color;
-  box-shadow: inset 0 -6px 6px -5px rgba(0,0,0,0.25),
-  inset 0 6px 6px -5px rgba(0,0,0,0.25);
 
   .output{
     font-size: 36px;
@@ -137,6 +136,8 @@ export default {
     padding: 9px 16px;
     text-align: right;
     background: #fb9a7f;
+    box-shadow: inset 0 -6px 6px -5px rgba(0,0,0,0.25),
+    inset 0 6px 6px -5px rgba(0,0,0,0.25);
   }
 
   .buttons{
