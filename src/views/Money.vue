@@ -15,7 +15,7 @@
       <div class="notes">
         <label>
           <span class="name">备注</span>
-          <input type="text">
+          <input type="text" placeholder="备注信息">
         </label>
       </div>
       <div>
@@ -38,8 +38,8 @@
           <button>7</button>
           <button>8</button>
           <button>9</button>
-          <button>OK</button>
-          <button>0</button>
+          <button class="ok">OK</button>
+          <button class="zero">0</button>
           <button>.</button>
         </div>
       </div>
@@ -60,6 +60,7 @@ export default {
 .tags{
   font-size: 14px;
   padding: 16px;
+  background: #e4e9ef;
   > .current{
     display: flex;
     >li{
@@ -83,7 +84,7 @@ export default {
 
 .notes{
   font-size: 14px;
-  background: #f5f5f5;
+  background: #bea39c;
   padding-left: 16px;
   display: flex;
   align-items: center;
@@ -102,7 +103,7 @@ export default {
 }
 
 .types{
-  background: #c4c4c4;
+  background: #bdd067;
   display: flex;
   text-align: center;
 
@@ -113,7 +114,7 @@ export default {
     justify-content: center;
     align-items: center;
     position: relative;
-    
+
     &.selected::after{
       content: '';
       position: absolute;
@@ -121,6 +122,45 @@ export default {
       width: 100%;
       height: 4px;
       background-color: #333;
+    }
+  }
+}
+
+.numberPad{
+  background: $numberPad-color;
+  box-shadow: inset 0 -6px 6px -5px rgba(0,0,0,0.25),
+  inset 0 6px 6px -5px rgba(0,0,0,0.25);
+
+  .output{
+    font-size: 36px;
+    font-family: Consolas, monospace;
+    padding: 9px 16px;
+    text-align: right;
+    background: #fb9a7f;
+  }
+
+  .buttons{
+    @extend %clearFix;
+
+    >button{
+      width: 25%;
+      height: 64px;
+      float: left;
+      background: transparent;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid #fff;
+
+      &.ok {
+        height: 64*2px;
+        float: right;
+      }
+
+      // 颜色函数，使某个颜色变暗 百分比
+      // darken('#fff',4%);
+      &.zero{
+        width: 25*2%;
+      }
     }
   }
 }
