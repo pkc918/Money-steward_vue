@@ -4,36 +4,70 @@
       <li
           :class="type === '-' && 'selected'"
           @click="selectType('-')"
-      >支出</li>
+      >支出
+      </li>
       <li
           :class="type === '+' && 'selected'"
           @click="selectType('+')"
-      >收入</li>
+      >收入
+      </li>
     </ul>
   </div>
 </template>
 
-<script lang="js">
-export default {
-  name: 'Types',
-  props:['xxx'],
-  data(){
-    return{
-      type: '-'
+<script lang="ts">
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class Types extends Vue {
+  // 装饰器
+  @Prop(String) xxx: string | undefined;
+  /*
+  * String 运行时类型
+  * string | undefined 编译时类型
+  */
+  type = '-';
+
+  selectType(type: string) {
+    /* '-': 支出，'+': 收入 */
+    if (type !== '-' && type !== '+') {
+      throw new Error('type is unknown');
     }
-  },
+    this.type = type;
+  }
+
   mounted() {
-    console.log(this.xxx);
-  },
-  methods: {
-    selectType(type){
-      if (type !== '-' && type !== '+'){
-        throw new Error('type is unknown');
-      }
-      this.type = type
+    // this.xxx 可能为 undefined，不做判断就会报错
+    if (this.xxx === undefined){
+      console.log(this.xxx);
+    }else {
+      console.log(this.xxx);
     }
   }
-};
+}
+
+
+// export default {
+//   name: 'Types',
+//   props:['xxx'],
+//   data(){
+//     return{
+//       type: '-'
+//     }
+//   },
+//   mounted() {
+//     console.log(this.xxx);
+//   },
+//   methods: {
+//     selectType(type){
+//       if (type !== '-' && type !== '+'){
+//         throw new Error('type is unknown');
+//       }
+//       this.type = type
+//     }
+//   }
+// };
 </script>
 
 <style lang="scss" scoped>
