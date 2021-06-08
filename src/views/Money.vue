@@ -3,7 +3,7 @@
     <Layout content-class="xxx">
       <Tags/>
       <Notes/>
-      <Types/>
+      <Types xxx="+" />
       <NumberPad/>
     </Layout>
   </div>
