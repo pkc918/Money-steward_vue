@@ -1,7 +1,7 @@
 <template>
   <div class="numberPad">
-    <div class="output">100</div>
-    <div class="buttons">
+    <div class="output">{{ output }}</div>
+    <div class="buttons" @click="inputContent">
       <button>1</button>
       <button>2</button>
       <button>3</button>
@@ -21,10 +21,49 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
 
-export default {
-  name: 'NumberPad'
-};
+@Component
+export default class NumberPad extends Vue {
+  output = '0';
+
+  // 鼠标事件类型，点击才有的 event
+  inputContent(event: MouseEvent) {
+    const button = (event.target as HTMLButtonElement); // 强制为 HTMLButtonElement 类型
+    const content: string = button.textContent!; // 除去 null，不可能为空
+
+    switch (content) {
+      case '.':
+        if (this.output.indexOf('.') >= 0) {
+          return;
+        }
+        this.output += content;
+        break;
+      case '清空':
+        this.output = '0';
+        break;
+      case '删除':
+        if (this.output.length === 1){
+          this.output = '0';
+          return;
+        }
+        this.output = this.output.slice(0,-1);
+        break;
+      case 'OK':
+        console.log('OK');
+        break;
+      default:
+        if (this.output === '0') {
+          if ('0123456789'.indexOf(content) >= 0) {
+            this.output = content;
+            return;
+          }
+        }
+        this.output += content;
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
