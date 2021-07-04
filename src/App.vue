@@ -15,5 +15,6 @@ body{
   line-height: 1.5;
   font-size: 16px;
   font-family: $font-hei;
+  overflow: hidden;
 }
 </style>
