@@ -22,11 +22,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
-  output = '0';
+  @Prop({default: 0}) readonly value!: number;
+  output = this.value.toString();
 
   // 鼠标事件类型，点击才有的 event
   inputContent(event: MouseEvent) {
@@ -44,14 +45,14 @@ export default class NumberPad extends Vue {
         this.output = '0';
         break;
       case '删除':
-        if (this.output.length === 1){
+        if (this.output.length === 1) {
           this.output = '0';
           return;
         }
-        this.output = this.output.slice(0,-1);
+        this.output = this.output.slice(0, -1);
         break;
       case 'OK':
-        console.log('OK');
+        this.$emit('update:value', this.output);
         break;
       default:
         if (this.output === '0') {

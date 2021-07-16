@@ -2,12 +2,12 @@
   <div>
     <ul class="types">
       <li
-          :class="type === '-' && 'selected'"
+          :class="value === '-' && 'selected'"
           @click="selectType('-')"
       >支出
       </li>
       <li
-          :class="type === '+' && 'selected'"
+          :class="value === '+' && 'selected'"
           @click="selectType('+')"
       >收入
       </li>
@@ -17,33 +17,26 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Types extends Vue {
-  // 装饰器
-  @Prop(String) xxx: string | undefined;
   /*
   * String 运行时类型
   * string | undefined 编译时类型
   */
-  type = '-';
+  @Prop({default: '-'}) readonly value!: string;
 
   selectType(type: string) {
     /* '-': 支出，'+': 收入 */
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
     }
-    this.type = type;
+    this.$emit('update:value',type)
   }
-
-  mounted() {
-    // this.xxx 可能为 undefined，不做判断就会报错
-    if (this.xxx === undefined){
-      console.log(this.xxx);
-    }else {
-      console.log(this.xxx);
-    }
+  @Watch('type')
+  onTypeChanged(value: string) {
+    this.$emit('update:value',value)
   }
 }
 </script>

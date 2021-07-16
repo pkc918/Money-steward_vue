@@ -25,7 +25,7 @@ export default class Tags extends Vue{
   select(tag: string){
     const index = this.selectedTags.findIndex(item => item === tag)
     index >= 0 ? this.selectedTags.splice(index,1) : this.selectedTags.push(tag)
-    console.log(this.selectedTags);
+    this.$emit('update:value',this.selectedTags)
   }
   addTagName(){
     const tagName = window.prompt('请输入新增标签名！！！')!;
