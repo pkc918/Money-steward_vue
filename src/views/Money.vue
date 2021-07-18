@@ -1,11 +1,10 @@
 <template>
   <div>
     <Layout content-class="xxx">
-      {{ record }}
       <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
       <Notes :value.sync="record.notes"/>
       <Types :value.sync="record.type"/>
-      <NumberPad :value.sync="record.amount"/>
+      <NumberPad :value.sync="record.amount" @update:record="saveRecord"/>
     </Layout>
   </div>
 </template>
@@ -16,7 +15,7 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 type Record = {
   tags: string[];
@@ -31,9 +30,20 @@ type Record = {
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行'];
   record: Record = {tags: [], notes: '', type: '-', amount: 0};
+  recordList: Record[] = [];
 
   onUpdateTags(value: string[]) {
     this.record.tags = value;
+  }
+
+  saveRecord() {
+    const deepClone = JSON.parse(JSON.stringify(this.record))
+    this.recordList.push(deepClone);
+  }
+
+  @Watch('recordList')
+  addRecordListChange() {
+    window.localStorage.setItem('recordList', JSON.stringify(this.recordList))
   }
 }
 </script>
