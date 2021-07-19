@@ -16,37 +16,31 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
-const { model } = require('@/model.js')
+import model from '@/model';
 
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number;
-  createdAt?: Date;
-}
+const recordList: RecordItem[] = model.fetch();
 
 @Component({
   components: {Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行'];
-  record: Record = {tags: [], notes: '', type: '-', amount: 0};
-  recordList: Record[] = [];
+  record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
+  recordList: RecordItem[] = recordList;
 
   onUpdateTags(value: string[]) {
     this.record.tags = value;
   }
 
   saveRecord() {
-    const deepClone: Record = JSON.parse(JSON.stringify(this.record));
+    const deepClone: RecordItem = model.clone(this.record);
     deepClone.createdAt = new Date();
     this.recordList.push(deepClone);
   }
 
   @Watch('recordList')
   addRecordListChange() {
-    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+    model.save(this.recordList);
   }
 }
 </script>
