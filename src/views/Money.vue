@@ -16,12 +16,14 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
+const { model } = require('@/model.js')
 
 type Record = {
   tags: string[];
   notes: string;
   type: string;
   amount: number;
+  createdAt?: Date;
 }
 
 @Component({
@@ -37,13 +39,14 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const deepClone = JSON.parse(JSON.stringify(this.record))
+    const deepClone: Record = JSON.parse(JSON.stringify(this.record));
+    deepClone.createdAt = new Date();
     this.recordList.push(deepClone);
   }
 
   @Watch('recordList')
   addRecordListChange() {
-    window.localStorage.setItem('recordList', JSON.stringify(this.recordList))
+    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 }
 </script>
