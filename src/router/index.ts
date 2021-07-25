@@ -4,6 +4,7 @@ import Money from '@/views/Money.vue';
 import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
 import NotFound from '@/views/NotFound.vue';
+import EditLable from '@/views/EditLabel.vue';
 
 Vue.use(VueRouter);
 
@@ -25,17 +26,13 @@ const routes: Array<RouteConfig> = [
     component: Statistics
   },
   {
+    path: '/labels/edit/:id',
+    component: EditLable
+  },
+  {
     path: '*',
     component: NotFound
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
 ];
 
 const router = new VueRouter({

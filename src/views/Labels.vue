@@ -1,11 +1,15 @@
 <template>
   <Layout>
-    <ol>
-      <li v-for="tag in tags" :key="tag" @click="editTag">
-        <span>{{ tag }}</span>
+    <div class="tags">
+      <router-link
+          class="tag"
+          :to="`/labels/edit/${tag.id}`"
+          v-for="tag in tags"
+          :key="tag.id">
+        <span>{{ tag.name }}</span>
         <Icon name="edit"/>
-      </li>
-    </ol>
+      </router-link>
+    </div>
     <div class="btn">
       <button @click="createTag">新建标签</button>
     </div>
@@ -34,19 +38,15 @@ export default class Labels extends Vue {
       this.messageObj[message]?.();
     }
   }
-
-  editTag() {
-    console.log('edit');
-  }
 }
 
 </script>
 
 <style lang="scss" scoped>
-ol {
+.tags {
   padding: 5px;
 
-  li {
+  .tag {
     display: flex;
     justify-content: space-between;
     align-items: center;

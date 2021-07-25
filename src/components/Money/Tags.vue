@@ -3,10 +3,11 @@
     <ul class="current">
       <li
           v-for="tag in dataSource"
-          :key="tag"
+          :key="tag.id"
           :class="{selected: selectedTags.includes(tag)}"
           @click="select(tag)"
-      >{{tag}}</li>
+      >{{ tag.name }}
+      </li>
     </ul>
     <div class="new">
       <button @click="addTagName">新增标签</button>
@@ -19,19 +20,21 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
 @Component
-export default class Tags extends Vue{
+export default class Tags extends Vue {
   @Prop(Array) readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
-  select(tag: string){
-    const index = this.selectedTags.findIndex(item => item === tag)
-    index >= 0 ? this.selectedTags.splice(index,1) : this.selectedTags.push(tag)
-    this.$emit('update:value',this.selectedTags)
+
+  select(tag: string) {
+    const index = this.selectedTags.findIndex(item => item === tag);
+    index >= 0 ? this.selectedTags.splice(index, 1) : this.selectedTags.push(tag);
+    this.$emit('update:value', this.selectedTags);
   }
-  addTagName(){
+
+  addTagName() {
     const tagName = window.prompt('请输入新增标签名！！！')!;
     tagName.trim() === '' && window.alert('标签名不能位空');
-    if (this.dataSource){
-      this.$emit('update:dataSource',[...this.dataSource,tagName])
+    if (this.dataSource) {
+      this.$emit('update:dataSource', [...this.dataSource, tagName]);
     }
   }
 }
@@ -59,7 +62,7 @@ export default class Tags extends Vue{
       margin-bottom: 12px;
       white-space: normal;
 
-      &.selected{
+      &.selected {
         background-color: #fd6174;
       }
     }
