@@ -3,8 +3,8 @@
     <div class="tags">
       <router-link
           class="tag"
-          :to="`/labels/edit/${tag.id}`"
           v-for="tag in tags"
+          :to="`/labels/edit/${tag.id}`"
           :key="tag.id">
         <span>{{ tag.name }}</span>
         <Icon name="edit"/>
