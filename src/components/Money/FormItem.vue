@@ -16,7 +16,7 @@ import Vue from 'vue';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
-export default class Notes extends Vue {
+export default class FormItem extends Vue {
   @Prop({default: ''}) readonly value!: string
   @Prop() placeholder?: string
   @Prop({required: true}) fieldName!: string
@@ -32,7 +32,6 @@ export default class Notes extends Vue {
 <style lang="scss" scoped>
 .notes {
   font-size: 14px;
-  background: #bea39c;
   padding-left: 16px;
   display: flex;
   align-items: center;
