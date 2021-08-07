@@ -8,6 +8,7 @@
           :value.sync="record.notes"/>
       <Types :value.sync="record.type"/>
       <NumberPad :value.sync="record.amount" @update:record="saveRecord"/>
+      {{record}}
     </Layout>
   </div>
 </template>
