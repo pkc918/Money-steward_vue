@@ -38,11 +38,11 @@ export default class EditLable extends Vue {
   }
 
   update(name: string) {
-    this.tag && window.update(this.tag.id, name);
+    this.tag && window.updateTag(this.tag.id, name);
   }
 
   remove() {
-    this.tag && window.remove(this.tag.id) && this.$router.back();
+    this.tag && window.removeTag(this.tag.id) && this.$router.back();
   }
 
   goBack() {
