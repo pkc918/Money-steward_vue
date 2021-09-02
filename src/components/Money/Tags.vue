@@ -33,7 +33,10 @@ export default class Tags extends Vue {
   addTagName() {
     const tagName = window.prompt('请输入新增标签名！！！')!;
     tagName.trim() === '' && window.alert('标签名不能位空');
+    console.log(this.dataSource);
     if (this.dataSource) {
+      console.log(111);
+      console.log([...this.dataSource, tagName]);
       this.$emit('update:dataSource', [...this.dataSource, tagName]);
     }
   }

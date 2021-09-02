@@ -47,7 +47,7 @@ export default class EditLable extends Vue {
     this.tag && tagListModel.update(this.tag.id, name)
   }
   remove() {
-    this.tag && tagListModel.remove(this.tag.id)
+    this.tag && tagListModel.remove(this.tag.id) && this.$router.back()
   }
   goBack() {
     this.$router.back()
