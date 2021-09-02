@@ -22,12 +22,11 @@ import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
 import Button from '@/components/Button.vue';
 
-tagListModel.fetch();
 @Component({
   components: {Button}
 })
 export default class Labels extends Vue {
-  tags = tagListModel.data;
+  tags = window.tagList;
   messageObj = {
     duplicated: () => {window.alert('标签已经存在');},
     success: () => {window.alert('添加成功');}
