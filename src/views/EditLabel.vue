@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="editLabel">
-      <Icon class="leftIcon" name="left" @click="goBack" />
+      <Icon class="leftIcon" name="left" @click="goBack"/>
       <span>编辑标签</span>
     </div>
     <div class="form-wrapper">
@@ -13,7 +13,7 @@
       />
     </div>
     <div class="deleteBtn">
-      <Button @click="remove" >删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -37,20 +37,23 @@ export default class EditLable extends Vue {
     const tags = tagListModel.data;
     const tag = tags.filter(item => item.id === id)[0];
     if (tag) {
-      this.tag = tag
-    } else{
+      this.tag = tag;
+    } else {
       this.$router.replace('/404');
     }
   }
+
   update(name: string) {
-    console.log(name)
-    this.tag && tagListModel.update(this.tag.id, name)
+    console.log(name);
+    this.tag && tagListModel.update(this.tag.id, name);
   }
+
   remove() {
-    this.tag && tagListModel.remove(this.tag.id) && this.$router.back()
+    this.tag && tagListModel.remove(this.tag.id) && this.$router.back();
   }
+
   goBack() {
-    this.$router.back()
+    this.$router.back();
   }
 }
 </script>

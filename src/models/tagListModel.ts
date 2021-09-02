@@ -22,22 +22,22 @@ const tagListModel: TagListType = {
   create(name) {
     const names = this.data.map(item => item.name);
     if (names.indexOf(name) >= 0) { return 'duplicated';}
-    const id = createId().toString()
+    const id = createId().toString();
     this.data.push({id, name});
     this.save();
     return 'success';
   },
   remove(id: string) {
-    let index = -1
+    let index = -1;
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].id === id) {
         index = i;
         break;
       }
     }
-    this.data.splice(index,1);
+    this.data.splice(index, 1);
     this.save();
-    return true
+    return true;
   },
   update(id, name) {
     const idList = this.data.map(item => item.id);
