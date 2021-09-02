@@ -21,7 +21,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 
@@ -29,27 +28,21 @@ import Button from '@/components/Button.vue';
   components: {Button, FormItem}
 })
 export default class EditLable extends Vue {
-  tag?: { id: string; name: string } = undefined;
+  tag?: Tag = undefined;
 
   created() {
-    const id = this.$route.params.id;
-    tagListModel.fetch();
-    const tags = tagListModel.data;
-    const tag = tags.filter(item => item.id === id)[0];
-    if (tag) {
-      this.tag = tag;
-    } else {
+    this.tag = window.findTag(this.$route.params.id);
+    if (!this.tag) {
       this.$router.replace('/404');
     }
   }
 
   update(name: string) {
-    console.log(name);
-    this.tag && tagListModel.update(this.tag.id, name);
+    this.tag && window.update(this.tag.id, name);
   }
 
   remove() {
-    this.tag && tagListModel.remove(this.tag.id) && this.$router.back();
+    this.tag && window.remove(this.tag.id) && this.$router.back();
   }
 
   goBack() {

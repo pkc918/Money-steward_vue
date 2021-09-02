@@ -26,10 +26,6 @@ import Button from '@/components/Button.vue';
 })
 export default class Labels extends Vue {
   tags = window.tagList;
-  messageObj = {
-    duplicated: () => {window.alert('标签已经存在');},
-    success: () => {window.alert('添加成功');}
-  };
 
   createTag() {
     const name = window.prompt('请输入标签名');
