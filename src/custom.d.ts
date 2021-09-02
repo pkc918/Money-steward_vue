@@ -26,4 +26,6 @@ interface Window {
   removeTag: (id: string) => boolean;
   updateTag: TagListType['update'];  // 表示类型和  TagListType下update一样
   findTag: (id: string) => Tag | undefined;
+  recordList: RecordItem[];
+  createRecord: (record: RecordItem) => void;
 }
