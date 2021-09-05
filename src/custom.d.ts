@@ -21,11 +21,13 @@ type TagListType = {
 }
 
 interface Window {
-  tagList: Tag[];
-  createTag: (name: string) => void;
-  removeTag: (id: string) => boolean;
-  updateTag: TagListType['update'];  // 表示类型和  TagListType下update一样
-  findTag: (id: string) => Tag | undefined;
-  recordList: RecordItem[];
-  createRecord: (record: RecordItem) => void;
+  store: {
+    tagList: Tag[];
+    createTag: (name: string) => void;
+    removeTag: (id: string) => boolean;
+    updateTag: TagListType['update'];  // 表示类型和  TagListType下update一样
+    findTag: (id: string) => Tag | undefined;
+    recordList: RecordItem[];
+    createRecord: (record: RecordItem) => void;
+  };
 }

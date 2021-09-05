@@ -13,6 +13,7 @@ const tagListModel: TagListType = {
     if (names.indexOf(name) >= 0) { return 'duplicated';}
     const id = createId().toString();
     this.data.push({id, name});
+    console.log(this.data,'data');
     this.save();
     return 'success';
   },
