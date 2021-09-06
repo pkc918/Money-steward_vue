@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout content-class="xxx">
-      <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+      <Tags/>
       <FormItem
           placeholder="请输如备注信息"
           field-name="备注"
@@ -19,24 +19,32 @@ import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component} from 'vue-property-decorator';
-import {store} from '@/store/index2';
 
 @Component({
-  components: {Tags, FormItem, Types, NumberPad}
+  components: {Tags, FormItem, Types, NumberPad},
+  computed: {
+    recordList() {
+      return this.$store.state.recordList;
+    }
+  }
 })
+/*
+* 目前为止
+* store 里全是引用类型，所以可以直接 store使用，且会变化store里的[]
+* 当 store 里有个值类型时，继续通过 store 里 api 改变值，在这个组件里拿不到最新值
+* 可以现在 App.vue 里挂载 store 让它被 vue 监听
+* 使用 computed 来对值类型复制 count (){return store.count}
+* */
 export default class Money extends Vue {
-  tags = store.tagList;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
-  recordList = store.recordList;
 
-  onUpdateTags(value: string[]) {
-    this.record.tags = value;
+  created() {
+    this.$store.commit('fetchRecords')
   }
 
   saveRecord() {
-    store.createRecord(this.record);
+    this.$store.commit('createRecord', this.record);
   }
-
 }
 </script>
 
