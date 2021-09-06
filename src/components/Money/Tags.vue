@@ -20,14 +20,12 @@ import {Component} from 'vue-property-decorator';
 import {TagHelper} from '@/mixins/TagHelper';
 import {mixins} from 'vue-class-component';
 
-@Component({
-  computed: {
-    tagList() {
-      return this.$store.state.tagList;
-    }
-  }
-})
+@Component
 export default class Tags extends mixins(TagHelper) {
+  get tagList() {
+    return this.$store.state.tagList;
+  }
+
   // dataSource!: string[]  只能为 string[]，不可能为空
   // @Prop({required: true}) readonly dataSource!: string[];
   selectedTags: string[] = [];

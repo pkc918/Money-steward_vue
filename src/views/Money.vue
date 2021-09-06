@@ -22,11 +22,6 @@ import {Component} from 'vue-property-decorator';
 
 @Component({
   components: {Tags, FormItem, Types, NumberPad},
-  computed: {
-    recordList() {
-      return this.$store.state.recordList;
-    }
-  }
 })
 /*
 * 目前为止
@@ -36,10 +31,14 @@ import {Component} from 'vue-property-decorator';
 * 使用 computed 来对值类型复制 count (){return store.count}
 * */
 export default class Money extends Vue {
+  get recordList() {
+    return this.$store.state.recordList;
+  }
+
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
   created() {
-    this.$store.commit('fetchRecords')
+    this.$store.commit('fetchRecords');
   }
 
   saveRecord() {
