@@ -2,16 +2,25 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import clone from '@/lib/clone';
 import createId from '@/lib/createId';
+import router from '@/router';
 
 Vue.use(Vuex);
 
+type RootState = {
+  localStorageRecordKeyName: string;
+  localStorageTagKeyName: string;
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag?: Tag;
+}
 const store = new Vuex.Store({
   state: {
     localStorageRecordKeyName: 'recordList',
     localStorageTagKeyName: 'tagList',
-    recordList: [] as RecordItem[],
-    tagList: [] as Tag[],
-  },
+    recordList: [],
+    tagList: [],
+    currentTag: undefined
+  } as RootState,
   mutations: {
     // records store
     fetchRecords(state) {
@@ -31,8 +40,26 @@ const store = new Vuex.Store({
     fetchTags(state) {
       return state.tagList = JSON.parse(window.localStorage.getItem(state.localStorageTagKeyName) || '[]');
     },
-    findTag(state, id: string) {
-      return state.tagList.filter(item => item.id === id)[0];
+    setCurrentTag(state, id: string) {
+      state.currentTag = state.tagList.filter(item => item.id === id)[0];
+    },
+    updateTag(state, payload: { id: string; name: string }) {
+      const {id, name} = payload;
+      const idList = state.tagList.map(item => item.id);
+      if (idList.indexOf(id) >= 0) {
+        const names = state.tagList.map(item => item.name);
+        if (names.indexOf(name) >= 0) {
+          window.alert('标签名重复了');
+          return 'duplicated';
+        } else {
+          const tag = state.tagList.filter(item => item.id === id)[0];
+          tag.name = name;
+          store.commit('saveTags');
+          return 'success';
+        }
+      } else {
+        return 'not found';
+      }
     },
     createTag(state, name: string) {
       const names = state.tagList.map(item => item.name);
@@ -54,9 +81,13 @@ const store = new Vuex.Store({
           break;
         }
       }
-      state.tagList.splice(index, 1);
-      store.commit('saveTags');
-      return true;
+      if (index >= 0) {
+        state.tagList.splice(index, 1);
+        store.commit('saveTags');
+        router.back();
+      } else {
+        window.alert('删除成功');
+      }
     },
     saveTags(state) {
       window.localStorage.setItem(state.localStorageTagKeyName, JSON.stringify(state.tagList));

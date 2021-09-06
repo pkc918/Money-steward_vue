@@ -23,27 +23,32 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
-import {store} from '@/store/index2';
 
 @Component({
-  components: {Button, FormItem}
+  components: {Button, FormItem},
 })
 export default class EditLable extends Vue {
-  tag?: Tag = undefined;
+  get tag() {
+    return this.$store.state.currentTag;
+  }
 
   created() {
-    this.tag = store.findTag(this.$route.params.id);
+    this.$store.commit('fetchTags');
+    this.$store.commit('setCurrentTag', this.$route.params.id);
     if (!this.tag) {
       this.$router.replace('/404');
     }
   }
 
   update(name: string) {
-    this.tag && store.updateTag(this.tag.id, name);
+    this.tag && this.$store.commit('updateTag',{id: this.tag.id, name})
   }
 
   remove() {
-    this.tag && store.removeTag(this.tag.id) && this.$router.back();
+    console.log(this.tag,'???');
+    if (this.tag){
+      this.$store.commit('removeTag', this.tag?.id)
+    }
   }
 
   goBack() {
