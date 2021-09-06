@@ -2,7 +2,7 @@
   <div class="tags">
     <ul class="current">
       <li
-          v-for="tag in dataSource"
+          v-for="tag in tagList"
           :key="tag.id"
           :class="{selected: selectedTags.includes(tag)}"
           @click="select(tag)"
@@ -17,26 +17,34 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 
-@Component
+@Component({
+  computed: {
+    tagList() {
+      return this.$store.state.tagList;
+    }
+  }
+})
 export default class Tags extends Vue {
-  @Prop(Array) readonly dataSource: string[] | undefined;
+  // dataSource!: string[]  只能为 string[]，不可能为空
+  // @Prop({required: true}) readonly dataSource!: string[];
   selectedTags: string[] = [];
+
+  created() {
+    this.$store.commit('fetchTags');
+  }
 
   select(tag: string) {
     const index = this.selectedTags.findIndex(item => item === tag);
     index >= 0 ? this.selectedTags.splice(index, 1) : this.selectedTags.push(tag);
-    this.$emit('update:value', this.selectedTags);
+    // this.$emit('update:value', this.selectedTags);
   }
 
   addTagName() {
     const tagName = window.prompt('请输入新增标签名！！！')!;
-    tagName.trim() === '' && window.alert('标签名不能位空');
-    console.log(this.dataSource);
-    if (this.dataSource) {
-      this.$emit('update:dataSource', [...this.dataSource, tagName]);
-    }
+    !tagName.trim() && window.alert('标签名不能位空');
+    this.$store.commit('createTag', tagName);
   }
 }
 </script>
