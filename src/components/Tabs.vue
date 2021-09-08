@@ -2,6 +2,7 @@
   <ul class="tabs">
     <!--  使用变量要使用 [变量，语句]: boolean    -->
     <li
+        class="tabs-item"
         :class="liClass(item)"
         v-for="item in dataSource"
         :key="item.value"
@@ -43,7 +44,7 @@ export default class Tabs extends Vue {
   display: flex;
   text-align: center;
 
-  > li {
+  &-item {
     width: 50%;
     height: 64px;
     display: flex;
