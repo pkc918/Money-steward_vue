@@ -1,13 +1,14 @@
 <template>
   <div>
     <ul class="types">
+      <!--  使用变量要使用 [变量，语句]: boolean    -->
       <li
-          :class="value === '-' && 'selected'"
+          :class="{[classPrefix +'-item']: classPrefix,selected: value === '-'}"
           @click="selectType('-')"
       >支出
       </li>
       <li
-          :class="value === '+' && 'selected'"
+          :class="{[classPrefix + '-item']: classPrefix, selected: value === '+'}"
           @click="selectType('+')"
       >收入
       </li>
@@ -25,18 +26,20 @@ export default class Types extends Vue {
   * String 运行时类型
   * string | undefined 编译时类型
   */
-  @Prop({default: '-'}) readonly value!: string;
+  @Prop(String) readonly value!: string;
+  @Prop(String) classPrefix?: string;
 
   selectType(type: string) {
     /* '-': 支出，'+': 收入 */
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
     }
-    this.$emit('update:value',type)
+    this.$emit('update:value', type);
   }
+
   @Watch('type')
   onTypeChanged(value: string) {
-    this.$emit('update:value',value)
+    this.$emit('update:value', value);
   }
 }
 </script>
