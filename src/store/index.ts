@@ -6,13 +6,6 @@ import router from '@/router';
 
 Vue.use(Vuex);
 
-type RootState = {
-  localStorageRecordKeyName: string;
-  localStorageTagKeyName: string;
-  recordList: RecordItem[];
-  tagList: Tag[];
-  currentTag?: Tag;
-}
 const store = new Vuex.Store({
   state: {
     localStorageRecordKeyName: 'recordList',
@@ -31,7 +24,7 @@ const store = new Vuex.Store({
     },
     createRecord(state, record: RecordItem) {
       const deepClone: RecordItem = clone(record);
-      deepClone.createdAt = new Date();
+      deepClone.createdAt = new Date().toISOString();
       console.log(state.recordList);
       state.recordList?.push(deepClone);
       store.commit('saveRecords');
