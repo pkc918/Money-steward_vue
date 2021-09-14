@@ -37,7 +37,7 @@ export default class Money extends Vue {
   }
 
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
-  recordTypeList = recordTypeList
+  recordTypeList = recordTypeList;
 
   created() {
     this.$store.commit('fetchRecords');
