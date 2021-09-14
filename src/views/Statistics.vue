@@ -9,7 +9,7 @@
           :value.sync="interval"
     />
     <ol>
-      <li v-for="(group,index) in result" :key="index" >
+      <li v-for="group in result" :key="group.title" >
         <h3 class="title">{{ group.title }}</h3>
         <ol>
           <li
