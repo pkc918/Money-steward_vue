@@ -4,13 +4,13 @@
           :data-source="recordTypeList"
           :value.sync="type"
     />
-    <Tabs class-prefix="interval"
-          :data-source="intervalList"
-          :value.sync="interval"
-    />
+    <!--    <Tabs class-prefix="interval"-->
+    <!--          :data-source="intervalList"-->
+    <!--          :value.sync="interval"-->
+    <!--    />-->
     <ol>
       <li v-for="group in groupList" :key="group.title">
-        <h3 class="title">{{ beautify(group.title) }}</h3>
+        <h3 class="title">{{ beautify(group.title) }}<span>￥{{ group.total }}</span></h3>
         <ol>
           <li
               class="record"
@@ -31,15 +31,9 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
-import intervalList from '@/constants/intervalList';
+// import intervalList from '@/constants/intervalList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
-
-
-type sourceItem = {
-  title: string;
-  items: [RecordItem];
-}
 
 @Component({
   components: {Tabs}
@@ -51,25 +45,31 @@ export default class Statistics extends Vue {
 
 
   get groupList() {
+    type sourceItem = {
+      title: string;
+      total?: number;
+      items: [RecordItem];
+    }
     const {recordList} = this;
-    const newList = clone(recordList).sort(({createdAt: a}, {createdAt: b}) => dayjs(b).valueOf() - dayjs(a).valueOf());
+    const newList = clone(recordList).filter(v => v.type === this.type).sort(({createdAt: a}, {createdAt: b}) => dayjs(b).valueOf() - dayjs(a).valueOf());
     return newList.reduce((prev: sourceItem[], next: RecordItem) => {
       const {createdAt} = next || {};
       const date = dayjs(createdAt).format('YYYY-MM-DD');
       const source: sourceItem | undefined = prev.find(({title}) => title === date);
       if (source) {
         source.items.push({...next});
+        source.total = source.items.reduce((sum, item) => sum + item.amount, 0);
       } else {
-        prev.push({'title': date, items: [{...next}]});
+        prev.push({'title': date, total: next.amount, items: [{...next}]});
       }
       return prev;
     }, []);
   }
 
   type = '-';
-  interval = 'day';
+  // interval = 'day';
+  // intervalList = intervalList;
   recordTypeList = recordTypeList;
-  intervalList = intervalList;
 
   created() {
     this.$store.commit('fetchRecords');

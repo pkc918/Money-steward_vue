@@ -52,7 +52,7 @@ export default class NumberPad extends Vue {
         this.output = this.output.slice(0, -1);
         break;
       case 'OK':
-        this.$emit('update:value', this.output);
+        this.$emit('update:value', parseFloat(this.output));
         this.$emit('update:record');
         this.output = '0'
         break;
