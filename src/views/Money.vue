@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout content-class="xxx">
-      <Tags/>
+      <Tags @update:value="record.tags = $event"/>
       <FormItem
           placeholder="请输如备注信息"
           field-name="备注"
@@ -44,10 +44,11 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
+    if (!this.record.tags || this.record.tags.length === 0) {
+      return window.alert('请至少选择一个标签');
+    }
     this.$store.commit('createRecord', this.record);
+    this.record.notes = '';
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

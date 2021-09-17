@@ -16,7 +16,7 @@
               class="record"
               v-for="item in group.items"
               :key="item.id">
-            <span>{{ item.tags.length === 0 ? '无' : item.tags.join(',') }}</span>
+            <span>{{ item.tags.length === 0 ? '无' : item.tags.map(v => v.name).join(',') }}</span>
             <span class="note">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
           </li>
