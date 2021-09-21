@@ -2,6 +2,9 @@
 const path = require('path')
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/vue_bill-website/'
+    : '/',
   lintOnSave: false,
   chainWebpack: config => {
     // icon 存在的目录，__dirname表示当前目录,后面就是具体路径
