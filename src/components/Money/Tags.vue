@@ -4,7 +4,7 @@
       <li
           v-for="tag in tagList"
           :key="tag.id"
-          :class="{selected: selectedTags.includes(tag)}"
+          :class="{selected: selectedTags.indexOf(tag) >= 0}"
           @click="select(tag)"
       >{{ tag.name }}
       </li>
