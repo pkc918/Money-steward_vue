@@ -8,7 +8,7 @@
     <!--          :data-source="intervalList"-->
     <!--          :value.sync="interval"-->
     <!--    />-->
-    <ol>
+    <ol v-if="groupList.length > 0">
       <li v-for="group in groupList" :key="group.title">
         <h3 class="title">{{ beautify(group.title) }}<span>￥{{ group.total }}</span></h3>
         <ol>
@@ -23,6 +23,9 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="noResult">
+      目前没有相关记录,快去存一笔吧！
+    </div>
   </Layout>
 </template>
 
@@ -138,5 +141,11 @@ export default class Statistics extends Vue {
   overflow: hidden; // 多余不显示
   text-overflow: ellipsis; // 省略号
   white-space: nowrap; // 不换行
+}
+
+.noResult{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 </style>
